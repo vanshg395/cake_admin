@@ -25,6 +25,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   responsive_builder: ^0.1.4
   get_it:
+  intl: ^0.16.1
+  font_awesome_flutter: ^8.8.1
   # provider_architecture:
   #   path: ../provider_architecture
   # provider: ^3.1.0
@@ -46,8 +48,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-   - assets/logo.png
+  # assets:
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -61,13 +62,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Open Sans
-      fonts:
-        - asset: assets/fonts/OpenSans-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/OpenSans-Regular.ttf
-          weight: 400
+  # fonts:
+  #   - family: Open Sans
+  #     fonts:
+  #       - asset: assets/fonts/OpenSans-ExtraBold.ttf
+  #         weight: 800
+  #       - asset: assets/fonts/OpenSans-Regular.ttf
+  #         weight: 400
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

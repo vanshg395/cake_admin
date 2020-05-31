@@ -17,8 +17,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Just Bake Admin',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Open Sans'),
+        primaryColor: Color(0xFF1188E3),
+        accentColor: Color(0xFF292827),
+        canvasColor: Color(0xFF1d2628),
+        textTheme: TextTheme(
+          caption: TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       builder: (context, child) => LayoutTemplate(
         child: child,

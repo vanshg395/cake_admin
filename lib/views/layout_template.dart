@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
-import '../widgets/centered_view.dart';
+import '../widgets/footer.dart';
 
 class LayoutTemplate extends StatelessWidget {
   final Widget child;
@@ -9,22 +8,14 @@ class LayoutTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, sizingInformation) => Scaffold(
-        // drawer: sizingInformation.deviceScreenType == DeviceScreenType.Mobile
-        //     ? NavigationDrawer()
-        //     : null,
-        // backgroundColor: Colors.white,
-        body: CenteredView(
-          child: Column(
-            children: <Widget>[
-              // NavigationBar(),
-              Expanded(
-                child: child,
-              )
-            ],
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: child,
           ),
-        ),
+          Footer()
+        ],
       ),
     );
   }
