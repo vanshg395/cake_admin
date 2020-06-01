@@ -3,6 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../widgets/home_content.dart';
+import '../extensions/hover_extensions.dart';
+// import 'package:cake_admin/locator.dart';
+// import 'package:cake_admin/services/navigation_service.dart';
 
 class HomeView extends StatelessWidget {
   @override
@@ -34,9 +37,14 @@ class HomeView extends StatelessWidget {
                     SizedBox(
                       width: 20,
                     ),
-                    Text(
-                      'Home',
-                      style: Theme.of(context).textTheme.headline5,
+                    GestureDetector(
+                      child: Text(
+                        'Home',
+                        style: Theme.of(context).textTheme.headline5,
+                      ).showCursorOnHover,
+                      onTap: () {
+                        // locator<NavigationService>().navigateTo('/login');
+                      },
                     ),
                     Spacer(),
                     if (sizingInfo.isDesktop) ...[
@@ -52,7 +60,7 @@ class HomeView extends StatelessWidget {
                       FontAwesomeIcons.userCircle,
                       color: Colors.white,
                       size: 30,
-                    ),
+                    ).showCursorOnHover,
                   ],
                 ),
               ),

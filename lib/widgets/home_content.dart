@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import './alt_button.dart';
+import '../extensions/hover_extensions.dart';
 
 class HomeContent extends StatelessWidget {
   @override
@@ -35,7 +36,7 @@ class HomeContent extends StatelessWidget {
                     //   ),
                     // );
                   },
-                ),
+                ).showCursorOnHover.moveUpOnHover,
                 AltButton(
                   title: 'Orders',
                   borderRadius: 20,
@@ -51,7 +52,7 @@ class HomeContent extends StatelessWidget {
                     //   ),
                     // );
                   },
-                ),
+                ).showCursorOnHover.moveUpOnHover,
               ],
             ),
             Row(
@@ -72,7 +73,7 @@ class HomeContent extends StatelessWidget {
                     //   ),
                     // );
                   },
-                ),
+                ).showCursorOnHover.moveUpOnHover,
                 AltButton(
                   title: 'Settings',
                   borderRadius: 20,
@@ -88,7 +89,7 @@ class HomeContent extends StatelessWidget {
                     //   ),
                     // );
                   },
-                ),
+                ).showCursorOnHover.moveUpOnHover,
               ],
             ),
             SizedBox(
@@ -183,7 +184,7 @@ class HomeContent extends StatelessWidget {
                 //   ),
                 // );
               },
-            ),
+            ).showCursorOnHover.moveUpOnHover,
             SizedBox(
               height: 20,
             ),
@@ -202,7 +203,7 @@ class HomeContent extends StatelessWidget {
                 //   ),
                 // );
               },
-            ),
+            ).showCursorOnHover.moveUpOnHover,
             SizedBox(
               height: 20,
             ),
@@ -222,7 +223,7 @@ class HomeContent extends StatelessWidget {
                 //   ),
                 // );
               },
-            ),
+            ).showCursorOnHover.moveUpOnHover,
             SizedBox(
               height: 20,
             ),
@@ -241,7 +242,7 @@ class HomeContent extends StatelessWidget {
                 //   ),
                 // );
               },
-            ),
+            ).showCursorOnHover.moveUpOnHover,
             SizedBox(
               height: 30,
             ),
