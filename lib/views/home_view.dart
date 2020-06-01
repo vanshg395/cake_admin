@@ -1,10 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+
+import '../widgets/home_content.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Login View'),
+    return ResponsiveBuilder(
+      builder: (context, sizingInfo) => Container(
+        child: Container(
+          height: MediaQuery.of(context).size.height - 50,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/img/bg.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 80,
+                color: Theme.of(context).accentColor,
+                padding: EdgeInsets.symmetric(
+                  horizontal: sizingInfo.isDesktop ? 36 : 24,
+                  vertical: 15,
+                ),
+                child: Row(
+                  children: [
+                    Image.asset('assets/img/logo.png'),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      'Home',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    Spacer(),
+                    if (sizingInfo.isDesktop) ...[
+                      Text(
+                        'USERNAME',
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                    ],
+                    Icon(
+                      FontAwesomeIcons.userCircle,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ],
+                ),
+              ),
+              HomeContent(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

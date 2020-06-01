@@ -11,6 +11,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(HomeView(), settings);
     case LoginRoute:
       return _getPageRoute(LoginView(), settings);
+    case RouteRoute:
+      return _getPageRoute(HomeView(), settings);
     // case EpisodesRoute:
     //   return _getPageRoute(EpisodesView(), settings);
     default:
