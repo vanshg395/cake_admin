@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import '../locator.dart';
+import '../routing/route_names.dart';
+import '../services/navigation_service.dart';
 import './alt_button.dart';
 import '../extensions/hover_extensions.dart';
 
@@ -46,6 +49,7 @@ class HomeContent extends StatelessWidget {
                   bgColor: Theme.of(context).canvasColor,
                   borderColor: Colors.white,
                   onPressed: () {
+                    locator<NavigationService>().navigateTo(OrderRoute);
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //     builder: (ctx) => MenuScreen(),
@@ -197,6 +201,8 @@ class HomeContent extends StatelessWidget {
               bgColor: Theme.of(context).canvasColor,
               borderColor: Colors.white,
               onPressed: () {
+                locator<NavigationService>().navigateTo(OrderRoute);
+
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(
                 //     builder: (ctx) => MenuScreen(),

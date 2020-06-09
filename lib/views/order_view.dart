@@ -140,53 +140,58 @@ class OrderView extends StatelessWidget {
                         ),
                         DataColumn(
                           label: Text(
-                            'Price',
+                            'Price (₹)',
                             style: TextStyle(fontStyle: FontStyle.italic),
                           ),
                         ),
                       ],
                       rows: <DataRow>[
                         DataRow(
-                          cells: <DataCell>[
-                            DataCell(
-                              Text('1'),
-                            ),
-                            DataCell(
-                              Text('Vansh'),
-                            ),
-                            DataCell(
-                              Text('0987654321'),
-                            ),
-                            DataCell(
-                              Text('abc@xyz.com'),
-                            ),
-                            DataCell(
-                              Text('BDAY'),
-                            ),
-                            DataCell(
-                              Text('10/07/2020'),
-                            ),
-                            DataCell(
-                              Text('Vansh'),
-                            ),
-                            DataCell(
-                              Text('ASAP'),
-                            ),
-                            DataCell(
-                              Text('Eggless'),
-                            ),
-                            DataCell(
-                              Text('1'),
-                            ),
-                            DataCell(
-                              Text('1.5'),
-                            ),
-                            DataCell(
-                              Text('500'),
-                            ),
-                          ],
-                        ),
+                            cells: <DataCell>[
+                              DataCell(
+                                Text('1'),
+                              ),
+                              DataCell(
+                                Text('Vansh'),
+                              ),
+                              DataCell(
+                                Text('0987654321'),
+                              ),
+                              DataCell(
+                                Text('abc@xyz.com'),
+                              ),
+                              DataCell(
+                                Text('BDAY'),
+                              ),
+                              DataCell(
+                                Text('10/07/2020'),
+                              ),
+                              DataCell(
+                                Text('Vansh'),
+                              ),
+                              DataCell(
+                                Text('ASAP'),
+                              ),
+                              DataCell(
+                                Text('Eggless'),
+                              ),
+                              DataCell(
+                                Text('1'),
+                              ),
+                              DataCell(
+                                Text('1.5'),
+                              ),
+                              DataCell(
+                                Text('500'),
+                              ),
+                            ],
+                            onSelectChanged: (_) {
+                              print('hey');
+                            }),
                         DataRow(
+                          onSelectChanged: (_) {
+                            print('hey2');
+                          },
                           cells: <DataCell>[
                             DataCell(
                               Text('1'),
