@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import './views/layout_template.dart';
+import 'package:provider/provider.dart';
 
 import 'locator.dart';
 import './services/navigation_service.dart';
 import './routing/router.dart';
 import './routing/route_names.dart';
+import './providers/auth.dart';
 
 void main() {
   setupLocator();
@@ -14,37 +16,43 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Just Bake Admin',
-      theme: ThemeData(
-        primaryColor: Color(0xFF1188E3),
-        accentColor: Color(0xFF292827),
-        canvasColor: Color(0xFF1d2628),
-        textTheme: TextTheme(
-          headline5: TextStyle(
-            color: Colors.white,
+    return ChangeNotifierProvider.value(
+      value: Auth(),
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
+          title: 'Just Bake Admin',
+          theme: ThemeData(
+            primaryColor: Color(0xFF1188E3),
+            accentColor: Color(0xFF292827),
+            canvasColor: Color(0xFF1d2628),
+            textTheme: TextTheme(
+              headline5: TextStyle(
+                color: Colors.white,
+              ),
+              headline6: TextStyle(
+                color: Colors.white,
+              ),
+              caption: TextStyle(
+                color: Colors.white,
+              ),
+              subtitle1: TextStyle(
+                color: Colors.white,
+              ),
+              bodyText1: TextStyle(
+                color: Colors.white,
+              ),
+            ),
           ),
-          headline6: TextStyle(
-            color: Colors.white,
+          builder: (context, child) => LayoutTemplate(
+            child: child,
           ),
-          caption: TextStyle(
-            color: Colors.white,
-          ),
-          subtitle1: TextStyle(
-            color: Colors.white,
-          ),
-          bodyText1: TextStyle(
-            color: Colors.white,
-          ),
+          navigatorKey: locator<NavigationService>().navigatorKey,
+          onGenerateRoute: generateRoute,
+          initialRoute: auth.isAuth ? HomeRoute : LoginRoute,
+
+          // home: ,
         ),
       ),
-      builder: (context, child) => LayoutTemplate(
-        child: child,
-      ),
-      navigatorKey: locator<NavigationService>().navigatorKey,
-      onGenerateRoute: generateRoute,
-      initialRoute: HomeRoute,
-      // home: ,
     );
   }
 }

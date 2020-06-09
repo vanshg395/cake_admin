@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:http/http.dart' as http;
+
 import '../widgets/common_button.dart';
 
 class LoginView extends StatefulWidget {
@@ -82,6 +84,9 @@ class _LoginViewState extends State<LoginView> {
                           labelText: 'Username',
                           focusColor: Theme.of(context).primaryColor,
                         ),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                         // style: MediaQuery.of(context).size.width < 600
                         //     ? Theme.of(context)
                         //         .primaryTextTheme
@@ -120,6 +125,9 @@ class _LoginViewState extends State<LoginView> {
                               });
                             },
                           ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
                         // style: MediaQuery.of(context).size.width < 600
                         //     ? Theme.of(context)
