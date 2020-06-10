@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: locator<NavigationService>().navigatorKey,
           onGenerateRoute: generateRoute,
           initialRoute: auth.isAuth ? HomeRoute : LoginRoute,
-
+          onUnknownRoute: getDefaultRoute,
           // home: ,
         ),
       ),

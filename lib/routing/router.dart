@@ -23,6 +23,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
   }
 }
 
+Route getDefaultRoute(RouteSettings settings) {
+  return _getPageRoute(LoginView(), settings);
+}
+
 PageRoute _getPageRoute(Widget child, RouteSettings settings) {
   return _FadeRoute(child: child, routeName: settings.name);
 }
