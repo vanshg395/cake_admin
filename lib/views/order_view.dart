@@ -82,7 +82,6 @@ class _OrderViewState extends State<OrderView> {
     _orderType = null;
     await showDialog(
       context: context,
-      barrierDismissible: false,
       child: StatefulBuilder(
         builder: (context, setState) => Dialog(
           child: Container(

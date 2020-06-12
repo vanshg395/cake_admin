@@ -80,7 +80,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
       String address, String totalAmount) async {
     await showDialog(
       context: context,
-      barrierDismissible: false,
+      // barrierDismissible: false,
       child: StatefulBuilder(
         builder: (context, setState) => Dialog(
           child: Container(
