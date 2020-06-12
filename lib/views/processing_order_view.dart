@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cake_admin/widgets/alt_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -14,17 +13,16 @@ import '../locator.dart';
 import '../services/navigation_service.dart';
 import '../routing/route_names.dart';
 import '../utils/constants.dart';
-import '../widgets/dropdown.dart';
+import '../widgets/alt_button.dart';
 
-class OrderView extends StatefulWidget {
+class ProcessingOrderView extends StatefulWidget {
   @override
-  _OrderViewState createState() => _OrderViewState();
+  _ProcessingOrderViewState createState() => _ProcessingOrderViewState();
 }
 
-class _OrderViewState extends State<OrderView> {
+class _ProcessingOrderViewState extends State<ProcessingOrderView> {
   bool _isLoading = false;
   List<dynamic> _orders = [];
-  String _orderType;
   GlobalKey<FormState> _formKey = GlobalKey();
   Map<String, dynamic> _data = {};
 
@@ -51,10 +49,10 @@ class _OrderViewState extends State<OrderView> {
 
   Future<void> getData() async {
     setState(() {
-      _isLoading = true;
+      _isLoading = false;
     });
     try {
-      final url = baseUrl + 'api/core/order/pending/';
+      final url = baseUrl + 'api/core/order/process/';
       final response = await http.get(
         url,
         headers: {
@@ -63,7 +61,7 @@ class _OrderViewState extends State<OrderView> {
         },
       );
       print(response.statusCode);
-      // print(response.body);
+      print(response.body);
       if (response.statusCode == 200) {
         final resBody = json.decode(response.body);
         setState(() {
@@ -78,8 +76,8 @@ class _OrderViewState extends State<OrderView> {
     });
   }
 
-  Future<void> _processOrder(String orderId, String totalAmount) async {
-    _orderType = null;
+  Future<void> _confirmOrder(String orderId, String balance, String orderType,
+      String address, String totalAmount) async {
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -125,7 +123,7 @@ class _OrderViewState extends State<OrderView> {
                     child: TextFormField(
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                        hintText: 'Advance Amount Paid',
+                        hintText: 'Remaining Amount Paid',
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
@@ -173,6 +171,9 @@ class _OrderViewState extends State<OrderView> {
                         if (double.tryParse(value) == null) {
                           return 'Enter valid value.';
                         }
+                        if (double.parse(value) != double.parse(balance)) {
+                          return 'Full Amount not paid.';
+                        }
                       },
                       onSaved: (value) {
                         _data['balance'] =
@@ -181,171 +182,10 @@ class _OrderViewState extends State<OrderView> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
-                  ),
-                  MultilineDropdownButtonFormField(
-                    // isExpanded: true,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(
-                          'Pickup',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        value: 'Pickup',
-                      ),
-                      DropdownMenuItem(
-                        child: Text(
-                          'Delivery',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        value: 'Delivery',
-                      ),
-                    ],
-                    value: _orderType,
-                    iconSize: MediaQuery.of(context).size.width < 600 ? 40 : 50,
-                    icon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    iconEnabledColor: Theme.of(context).cardColor,
-                    iconDisabledColor: Theme.of(context).cardColor,
-                    onChanged: (val) {
-                      if (_orderType == 'Delivery') {
-                        _data['address'] = null;
-                      }
-                      setState(() {
-                        _orderType = val;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(2),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(2),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(2),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(2),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(2),
-                        borderSide: BorderSide(
-                          width: 0,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      hintText: 'Order Type',
-                      hintStyle: TextStyle(
-                        fontSize: 16,
-                      ),
-                      labelStyle: TextStyle(
-                        fontSize: 16,
-                      ),
-                      contentPadding: EdgeInsets.only(
-                        left: 20,
-                        right: 10,
-                      ),
-                      errorStyle: TextStyle(color: Colors.red[200]),
-                      fillColor: Colors.white,
-                      filled: true,
-                    ),
-                    validator: (value) {
-                      if (value == null) {
-                        return 'This field is required.';
-                      }
-                    },
-                    onSaved: (value) {
-                      _data['order_type'] = value;
-                      // _data['quantity'] = value;
-                    },
-                  ),
-                  if (_orderType == 'Delivery') ...[
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 300,
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                          hintText: 'Address',
-                          filled: true,
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(2),
-                            borderSide: BorderSide(
-                              width: 0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(2),
-                            borderSide: BorderSide(
-                              width: 0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(2),
-                            borderSide: BorderSide(
-                              width: 0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(2),
-                            borderSide: BorderSide(
-                              width: 0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(2),
-                            borderSide: BorderSide(
-                              width: 0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          errorStyle: TextStyle(color: Colors.red[200]),
-                        ),
-                        style: TextStyle(color: Colors.black),
-                        validator: (value) {
-                          if (value == '') {
-                            return 'This field is required.';
-                          }
-                        },
-                        onSaved: (value) {
-                          _data['address'] = value;
-                        },
-                      ),
-                    ),
-                  ],
-                  SizedBox(
                     height: 30,
                   ),
                   AltButton(
-                    title: 'Process Order',
+                    title: 'Confirm Order',
                     borderRadius: 2,
                     fontSize: 16,
                     width: 300,
@@ -363,7 +203,7 @@ class _OrderViewState extends State<OrderView> {
                       //   ),
                       // );
                       try {
-                        final url = baseUrl + 'api/core/order/pending/';
+                        final url = baseUrl + 'api/core/order/process/';
                         final response = await http.post(
                           url,
                           headers: {
@@ -377,15 +217,15 @@ class _OrderViewState extends State<OrderView> {
                                   'approval': true,
                                   'total_amount': double.parse(totalAmount),
                                   'balance': _data['balance'],
-                                  'order_type': _data['order_type'],
+                                  'order_type': orderType,
                                 })
                               : json.encode({
                                   'order': orderId,
                                   'approval': true,
                                   'total_amount': double.parse(totalAmount),
                                   'balance': _data['balance'],
-                                  'order_type': _data['order_type'],
-                                  'address': _data['address'],
+                                  'order_type': orderType,
+                                  'address': address,
                                 }),
                         );
                         print(response.statusCode);
@@ -401,7 +241,7 @@ class _OrderViewState extends State<OrderView> {
                                 ),
                               ),
                               content: Text(
-                                'You order is now processing.',
+                                'You order is now confirmed.',
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),
@@ -428,7 +268,7 @@ class _OrderViewState extends State<OrderView> {
                                 ),
                               ),
                               content: Text(
-                                'You order could not be processed.',
+                                'You order could not be confirmed.',
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),
@@ -498,7 +338,7 @@ class _OrderViewState extends State<OrderView> {
                             ),
                             GestureDetector(
                               child: Text(
-                                'Orders',
+                                'Processing Orders',
                                 style: Theme.of(context).textTheme.headline5,
                               ).showCursorOnHover,
                               onTap: () {
@@ -620,84 +460,132 @@ class _OrderViewState extends State<OrderView> {
                               ),
                               DataColumn(
                                 label: Text(
+                                  'Balance (₹)',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Order Type',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Delivery Address',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
                                   'Actions',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ),
                             ],
                             rows: _orders
-                                .map(
-                                  (order) => DataRow(
-                                    cells: <DataCell>[
-                                      DataCell(
-                                        Text(
-                                          (_orders.indexOf(order) + 1)
-                                              .toString(),
+                                .map((order) => DataRow(
+                                      cells: <DataCell>[
+                                        DataCell(
+                                          Text(
+                                            (_orders.indexOf(order) + 1)
+                                                .toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['name'],
+                                        DataCell(
+                                          Text(
+                                            order['name'],
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['phone_number'],
+                                        DataCell(
+                                          Text(
+                                            order['phone_number'],
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['email'],
+                                        DataCell(
+                                          Text(
+                                            order['email'],
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['date_of_delivery']
-                                              .toString()
-                                              .substring(0, 10),
+                                        DataCell(
+                                          Text(
+                                            order['date_of_delivery']
+                                                .toString()
+                                                .substring(0, 10),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['message_on_cake'],
+                                        DataCell(
+                                          Text(
+                                            order['message_on_cake'],
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['special_instructions'],
+                                        DataCell(
+                                          Text(
+                                            order['special_instructions'],
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['eggless'] ? 'YES' : 'NO',
+                                        DataCell(
+                                          Text(
+                                            order['eggless'] ? 'YES' : 'NO',
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['quantity'].toString(),
+                                        DataCell(
+                                          Text(
+                                            order['quantity'].toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['weight'].toString(),
+                                        DataCell(
+                                          Text(
+                                            order['weight'].toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          order['total_amount'].toString(),
+                                        DataCell(
+                                          Text(
+                                            order['total_amount'].toString(),
+                                          ),
                                         ),
-                                      ),
-                                      DataCell(
-                                        RaisedButton(
-                                          child: Text('Process Order'),
-                                          onPressed: () => _processOrder(
-                                              order['id'].toString(),
-                                              order['total_amount'].toString()),
+                                        DataCell(
+                                          Text(
+                                            order['order_details'][0]['balance']
+                                                .toString(),
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                )
+                                        DataCell(
+                                          Text(
+                                            order['order_details'][0]
+                                                ['order_type'],
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            order['order_details'][0]
+                                                        ['order_type'] ==
+                                                    'Pickup'
+                                                ? '-'
+                                                : order['order_details'][0]
+                                                    ['address'],
+                                          ),
+                                        ),
+                                        DataCell(
+                                          RaisedButton(
+                                            child: Text('Confirm Order'),
+                                            onPressed: () {
+                                              _confirmOrder(
+                                                  order['id'].toString(),
+                                                  order['order_details'][0]
+                                                          ['balance']
+                                                      .toString(),
+                                                  order['order_details'][0]
+                                                      ['order_type'],
+                                                  order['order_details'][0]
+                                                      ['address'],
+                                                  order['order_details'][0]
+                                                      ['total_amount']);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ))
                                 .toList(),
                           ),
                         ),

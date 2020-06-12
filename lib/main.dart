@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: Color(0xFF1188E3),
             accentColor: Color(0xFF292827),
-            canvasColor: Color(0xFF1d2628),
+            canvasColor: Colors.white,
             textTheme: TextTheme(
               headline5: TextStyle(
                 color: Colors.white,

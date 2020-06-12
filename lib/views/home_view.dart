@@ -79,7 +79,8 @@ class _HomeViewState extends State<HomeView> {
                               style: Theme.of(context).textTheme.headline5,
                             ).showCursorOnHover,
                             onTap: () {
-                              // locator<NavigationService>().navigateTo('/login');
+                              locator<NavigationService>()
+                                  .navigateTo(HomeRoute);
                             },
                           ),
                           Spacer(),
@@ -94,11 +95,36 @@ class _HomeViewState extends State<HomeView> {
                               width: 20,
                             ),
                           ],
-                          Icon(
-                            FontAwesomeIcons.userCircle,
-                            color: Colors.white,
-                            size: 30,
-                          ).showCursorOnHover,
+                          // Icon(
+                          //   FontAwesomeIcons.userCircle,
+                          //   color: Colors.white,
+                          //   size: 30,
+                          // ).showCursorOnHover,
+                          PopupMenuButton(
+                            icon: Icon(
+                              FontAwesomeIcons.userCircle,
+                              color: Colors.white,
+                              size: 30,
+                            ).showCursorOnHover,
+                            itemBuilder: (_) => [
+                              PopupMenuItem(
+                                child: Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                value: 'Logout',
+                              ),
+                            ],
+                            onSelected: (value) async {
+                              if (value == 'Logout') {
+                                await Provider.of<Auth>(context, listen: false)
+                                    .logout();
+                                checkLogin();
+                              }
+                            },
+                          )
                         ],
                       ),
                     ),

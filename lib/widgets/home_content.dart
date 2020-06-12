@@ -26,6 +26,7 @@ class HomeContent extends StatelessWidget {
               children: [
                 AltButton(
                   title: 'Approvals',
+                  textColor: Colors.black,
                   borderRadius: 20,
                   fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
                   width: 300,
@@ -38,10 +39,13 @@ class HomeContent extends StatelessWidget {
                     //     builder: (ctx) => MenuScreen(),
                     //   ),
                     // );
+                    locator<NavigationService>()
+                        .navigateTo(ProcessingOrderRoute);
                   },
                 ).showCursorOnHover.moveUpOnHover,
                 AltButton(
                   title: 'Orders',
+                  textColor: Colors.black,
                   borderRadius: 20,
                   fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
                   width: 300,
@@ -65,6 +69,7 @@ class HomeContent extends StatelessWidget {
                 AltButton(
                   title: 'Database',
                   borderRadius: 20,
+                  textColor: Colors.black,
                   fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
                   width: 300,
                   height: 80,
@@ -81,6 +86,7 @@ class HomeContent extends StatelessWidget {
                 AltButton(
                   title: 'Settings',
                   borderRadius: 20,
+                  textColor: Colors.black,
                   fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
                   width: 300,
                   height: 80,
@@ -115,7 +121,10 @@ class HomeContent extends StatelessWidget {
                   ),
                   Text(
                     'For Approval - ',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.black),
                   ),
                   Text(
                     'XX',
@@ -129,7 +138,10 @@ class HomeContent extends StatelessWidget {
                   ),
                   Text(
                     'For Delivery - ',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.black),
                   ),
                   Text(
                     'XX',
@@ -143,7 +155,10 @@ class HomeContent extends StatelessWidget {
                   ),
                   Text(
                     'Delivered - ',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.black),
                   ),
                   Text(
                     'XX',
@@ -175,6 +190,7 @@ class HomeContent extends StatelessWidget {
             ),
             AltButton(
               title: 'Approvals',
+              textColor: Colors.black,
               borderRadius: 20,
               fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
               width: 300,
@@ -182,6 +198,7 @@ class HomeContent extends StatelessWidget {
               bgColor: Theme.of(context).canvasColor,
               borderColor: Colors.white,
               onPressed: () {
+                locator<NavigationService>().navigateTo(ProcessingOrderRoute);
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(
                 //     builder: (ctx) => MenuScreen(),
@@ -194,6 +211,7 @@ class HomeContent extends StatelessWidget {
             ),
             AltButton(
               title: 'Orders',
+              textColor: Colors.black,
               borderRadius: 20,
               fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
               width: 300,
@@ -215,6 +233,7 @@ class HomeContent extends StatelessWidget {
             ),
             AltButton(
               title: 'Database',
+              textColor: Colors.black,
               borderRadius: 20,
               fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
               width: 300,
@@ -235,6 +254,7 @@ class HomeContent extends StatelessWidget {
             ),
             AltButton(
               title: 'Settings',
+              textColor: Colors.black,
               borderRadius: 20,
               fontSize: MediaQuery.of(context).size.width < 600 ? 16 : 26,
               width: 300,
@@ -271,7 +291,10 @@ class HomeContent extends StatelessWidget {
                   ),
                   Text(
                     'For Approval - ',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.black),
                   ),
                   Text(
                     'XX',
@@ -287,7 +310,10 @@ class HomeContent extends StatelessWidget {
                   ),
                   Text(
                     'For Delivery - ',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.black),
                   ),
                   Text(
                     'XX',
@@ -303,7 +329,10 @@ class HomeContent extends StatelessWidget {
                   ),
                   Text(
                     'Delivered - ',
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .copyWith(color: Colors.black),
                   ),
                   Text(
                     'XX',

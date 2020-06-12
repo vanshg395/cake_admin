@@ -5,6 +5,7 @@ import '../views/home_view.dart';
 import '../views/login_view.dart';
 import '../views/error_view.dart';
 import '../views/order_view.dart';
+import '../views/processing_order_view.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -16,6 +17,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(HomeView(), settings);
     case OrderRoute:
       return _getPageRoute(OrderView(), settings);
+    case ProcessingOrderRoute:
+      return _getPageRoute(ProcessingOrderView(), settings);
     // case EpisodesRoute:
     //   return _getPageRoute(EpisodesView(), settings);
     default:
