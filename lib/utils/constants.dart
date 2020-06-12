@@ -1,1 +1,1 @@
-const baseUrl = 'http://api.justbakeadmin.live';
+const baseUrl = 'https://apis.justbakeadmin.live/admin/login/?next=/admin/';
