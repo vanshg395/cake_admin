@@ -63,11 +63,11 @@ class _OrderViewState extends State<OrderView> {
         },
       );
       print(response.statusCode);
-      // print(response.body);
       if (response.statusCode == 200) {
         final resBody = json.decode(response.body);
         setState(() {
           _orders = resBody['payload'];
+          print(DateTime.parse(_orders[0]['date_of_delivery']));
         });
       }
     } catch (e) {
@@ -583,6 +583,12 @@ class _OrderViewState extends State<OrderView> {
                               ),
                               DataColumn(
                                 label: Text(
+                                  'Time of Delivery',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
                                   'Cake Name',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
@@ -666,6 +672,13 @@ class _OrderViewState extends State<OrderView> {
                                           order['date_of_delivery']
                                               .toString()
                                               .substring(0, 10),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          order['date_of_delivery']
+                                              .toString()
+                                              .substring(11, 16),
                                         ),
                                       ),
                                       DataCell(

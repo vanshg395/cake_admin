@@ -424,6 +424,12 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                               ),
                               DataColumn(
                                 label: Text(
+                                  'Time of Delivery',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
                                   'Cake Name',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
@@ -524,6 +530,13 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                             order['date_of_delivery']
                                                 .toString()
                                                 .substring(0, 10),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            order['date_of_delivery']
+                                                .toString()
+                                                .substring(11, 16),
                                           ),
                                         ),
                                         DataCell(
