@@ -34,13 +34,13 @@ class HomeContent extends StatelessWidget {
                   bgColor: Theme.of(context).canvasColor,
                   borderColor: Colors.white,
                   onPressed: () {
+                    locator<NavigationService>().navigateTo(OrderRoute);
+
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //     builder: (ctx) => MenuScreen(),
                     //   ),
                     // );
-                    locator<NavigationService>()
-                        .navigateTo(ProcessingOrderRoute);
                   },
                 ).showCursorOnHover.moveUpOnHover,
                 AltButton(
@@ -53,7 +53,8 @@ class HomeContent extends StatelessWidget {
                   bgColor: Theme.of(context).canvasColor,
                   borderColor: Colors.white,
                   onPressed: () {
-                    locator<NavigationService>().navigateTo(OrderRoute);
+                    locator<NavigationService>()
+                        .navigateTo(ProcessingOrderRoute);
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //     builder: (ctx) => MenuScreen(),
@@ -198,7 +199,7 @@ class HomeContent extends StatelessWidget {
               bgColor: Theme.of(context).canvasColor,
               borderColor: Colors.white,
               onPressed: () {
-                locator<NavigationService>().navigateTo(ProcessingOrderRoute);
+                locator<NavigationService>().navigateTo(OrderRoute);
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(
                 //     builder: (ctx) => MenuScreen(),
@@ -219,7 +220,7 @@ class HomeContent extends StatelessWidget {
               bgColor: Theme.of(context).canvasColor,
               borderColor: Colors.white,
               onPressed: () {
-                locator<NavigationService>().navigateTo(OrderRoute);
+                locator<NavigationService>().navigateTo(ProcessingOrderRoute);
 
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(

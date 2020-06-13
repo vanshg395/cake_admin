@@ -338,7 +338,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                             ),
                             GestureDetector(
                               child: Text(
-                                'Processing Orders',
+                                'Approvals',
                                 style: Theme.of(context).textTheme.headline5,
                               ).showCursorOnHover,
                               onTap: () {
