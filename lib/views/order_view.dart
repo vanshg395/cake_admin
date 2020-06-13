@@ -583,6 +583,18 @@ class _OrderViewState extends State<OrderView> {
                               ),
                               DataColumn(
                                 label: Text(
+                                  'Cake Name',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Cake Type',
+                                  style: TextStyle(fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
                                   'Message on Cake',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
@@ -654,6 +666,16 @@ class _OrderViewState extends State<OrderView> {
                                           order['date_of_delivery']
                                               .toString()
                                               .substring(0, 10),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          order['cake_name'],
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          order['cake_department'],
                                         ),
                                       ),
                                       DataCell(
