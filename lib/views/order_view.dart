@@ -497,7 +497,7 @@ class _OrderViewState extends State<OrderView> {
                             ),
                             GestureDetector(
                               child: Text(
-                                'Orders',
+                                'Approvals',
                                 style: Theme.of(context).textTheme.headline5,
                               ).showCursorOnHover,
                               onTap: () {

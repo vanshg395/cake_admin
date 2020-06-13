@@ -49,7 +49,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
 
   Future<void> getData() async {
     setState(() {
-      _isLoading = false;
+      _isLoading = true;
     });
     try {
       final url = baseUrl + 'api/core/order/process/';
@@ -338,7 +338,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                             ),
                             GestureDetector(
                               child: Text(
-                                'Approvals',
+                                'Orders',
                                 style: Theme.of(context).textTheme.headline5,
                               ).showCursorOnHover,
                               onTap: () {
