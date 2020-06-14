@@ -62,17 +62,13 @@ class _OrderViewState extends State<OrderView> {
               Provider.of<Auth>(context, listen: false).token,
         },
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final resBody = json.decode(response.body);
         setState(() {
           _orders = resBody['payload'];
-          print(DateTime.parse(_orders[0]['date_of_delivery']));
         });
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
     setState(() {
       _isLoading = false;
     });
@@ -387,7 +383,6 @@ class _OrderViewState extends State<OrderView> {
                                   'address': _data['address'],
                                 }),
                         );
-                        print(response.statusCode);
                         if (response.statusCode == 201) {
                           Navigator.of(context).pop();
                           await showDialog(
@@ -443,9 +438,7 @@ class _OrderViewState extends State<OrderView> {
                             ),
                           );
                         }
-                      } catch (e) {
-                        print(e);
-                      }
+                      } catch (e) {}
                     },
                   )
                 ],

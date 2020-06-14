@@ -77,6 +77,7 @@ class HomeContent extends StatelessWidget {
                   bgColor: Theme.of(context).canvasColor,
                   borderColor: Colors.white,
                   onPressed: () {
+                    locator<NavigationService>().navigateTo(DatabaseRoute);
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //     builder: (ctx) => MenuScreen(),
@@ -94,6 +95,8 @@ class HomeContent extends StatelessWidget {
                   bgColor: Theme.of(context).canvasColor,
                   borderColor: Colors.white,
                   onPressed: () {
+                    locator<NavigationService>().navigateTo(SettingsRoute);
+
                     // Navigator.of(context).pushReplacement(
                     //   MaterialPageRoute(
                     //     builder: (ctx) => MenuScreen(),
@@ -242,7 +245,7 @@ class HomeContent extends StatelessWidget {
               bgColor: Theme.of(context).canvasColor,
               borderColor: Colors.white,
               onPressed: () {
-                print('asda');
+                locator<NavigationService>().navigateTo(DatabaseRoute);
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(
                 //     builder: (ctx) => MenuScreen(),
@@ -263,6 +266,8 @@ class HomeContent extends StatelessWidget {
               bgColor: Theme.of(context).canvasColor,
               borderColor: Colors.white,
               onPressed: () {
+                locator<NavigationService>().navigateTo(SettingsRoute);
+
                 // Navigator.of(context).pushReplacement(
                 //   MaterialPageRoute(
                 //     builder: (ctx) => MenuScreen(),

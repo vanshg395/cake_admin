@@ -50,7 +50,6 @@ class _LoginViewState extends State<LoginView> {
       await Provider.of<Auth>(context, listen: false).login(_data);
       locator<NavigationService>().navigateTo(HomeRoute);
     } catch (e) {
-      print(e);
       if (e.toString() == 'Not an Admin') {
         errorMessage =
             'This user is not an admin. Please use an Admin account.';

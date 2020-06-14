@@ -34,7 +34,6 @@ class Auth with ChangeNotifier {
         },
         body: json.encode(data),
       );
-      print(response.statusCode);
       if (response.statusCode == 200) {
         final resBody = json.decode(response.body);
         _username = data['username'];
@@ -68,9 +67,7 @@ class Auth with ChangeNotifier {
       _token = extractedUserData['token'];
       _username = extractedUserData['username'];
       return true;
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   Future<void> logout() async {

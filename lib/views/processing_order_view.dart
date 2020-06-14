@@ -60,17 +60,13 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
               Provider.of<Auth>(context, listen: false).token,
         },
       );
-      print(response.statusCode);
-      print(response.body);
       if (response.statusCode == 200) {
         final resBody = json.decode(response.body);
         setState(() {
           _orders = resBody['payload'];
         });
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
     setState(() {
       _isLoading = false;
     });
@@ -228,7 +224,6 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                   'address': address,
                                 }),
                         );
-                        print(response.statusCode);
                         if (response.statusCode == 201) {
                           Navigator.of(context).pop();
                           await showDialog(
@@ -284,9 +279,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                             ),
                           );
                         }
-                      } catch (e) {
-                        print(e);
-                      }
+                      } catch (e) {}
                     },
                   )
                 ],
