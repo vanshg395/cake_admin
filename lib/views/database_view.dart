@@ -14,6 +14,7 @@ import '../locator.dart';
 import '../services/navigation_service.dart';
 import '../routing/route_names.dart';
 import '../utils/constants.dart';
+import '../widgets/alt_button.dart';
 
 class DatabaseView extends StatefulWidget {
   @override
@@ -24,7 +25,9 @@ class _DatabaseViewState extends State<DatabaseView> {
   bool _isLoading = false;
   List<dynamic> _users = [];
   GlobalKey<FormState> _formKey = GlobalKey();
-  Map<String, dynamic> _data = {};
+  Map<String, dynamic> _data = {
+    'recipients': '',
+  };
 
   @override
   void initState() {
@@ -157,6 +160,204 @@ class _DatabaseViewState extends State<DatabaseView> {
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RaisedButton(
+                            child: Text('Send General Messages'),
+                            onPressed: () async {
+                              for (var i = 0; i < _users.length; i++) {
+                                if (i != _users.length - 1) {
+                                  _data['recipients'] +=
+                                      _users[i]['phone'] + ',';
+                                } else {
+                                  _data['recipients'] += _users[i]['phone'];
+                                }
+                              }
+                              print(_data);
+                              await showDialog(
+                                context: context,
+                                // barrierDismissible: false,
+                                child: StatefulBuilder(
+                                  builder: (context, setState) => Dialog(
+                                    child: Container(
+                                      padding: EdgeInsets.all(20),
+                                      width: 300,
+                                      child: Form(
+                                        key: _formKey,
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Enter Details',
+                                                  style: Theme.of(context)
+                                                      .primaryTextTheme
+                                                      .headline6
+                                                      .copyWith(
+                                                        color: Colors.black,
+                                                      ),
+                                                ),
+                                                GestureDetector(
+                                                  child: Icon(Icons.cancel),
+                                                  onTap: () {
+                                                    Navigator.of(context).pop();
+                                                    return;
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Container(
+                                              constraints: BoxConstraints(
+                                                maxWidth: 300,
+                                              ),
+                                              child: TextFormField(
+                                                maxLines: 3,
+                                                decoration: InputDecoration(
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 10),
+                                                  hintText: 'Message',
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                    borderSide: BorderSide(
+                                                      width: 0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                    borderSide: BorderSide(
+                                                      width: 0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                    borderSide: BorderSide(
+                                                      width: 0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                    borderSide: BorderSide(
+                                                      width: 0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            2),
+                                                    borderSide: BorderSide(
+                                                      width: 0,
+                                                      color: Colors.grey,
+                                                    ),
+                                                  ),
+                                                  errorStyle: TextStyle(
+                                                      color: Colors.red[200]),
+                                                ),
+                                                style: TextStyle(
+                                                    color: Colors.black),
+                                                validator: (value) {
+                                                  if (value == '') {
+                                                    return 'This field is required.';
+                                                  }
+                                                },
+                                                onSaved: (value) {
+                                                  _data['general_message'] =
+                                                      value;
+                                                },
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 30,
+                                            ),
+                                            AltButton(
+                                              title: 'Confirm Order',
+                                              borderRadius: 2,
+                                              fontSize: 16,
+                                              width: 300,
+                                              height: 50,
+                                              bgColor:
+                                                  Theme.of(context).accentColor,
+                                              borderColor: Colors.white,
+                                              onPressed: () async {
+                                                if (!_formKey.currentState
+                                                    .validate()) {
+                                                  return;
+                                                }
+                                                _formKey.currentState.save();
+                                                // Navigator.of(context).pushReplacement(
+                                                //   MaterialPageRoute(
+                                                //     builder: (ctx) => MenuScreen(),
+                                                //   ),
+                                                // );
+                                                try {
+                                                  final url =
+                                                      'https://www.fast2sms.com/dev/bulk';
+                                                  final response =
+                                                      await http.post(
+                                                    url,
+                                                    headers: {
+                                                      HttpHeaders
+                                                              .authorizationHeader:
+                                                          'zasPcL6w0f8F4dXhgyrEmjku9Mp3IbiVvQl2tRANGWKoe7xOZJ0uBy1dTe6cDIr9EfMY2KRxlZOS7zQX'
+                                                    },
+                                                    body: json.encode({
+                                                      "message": _data[
+                                                          'general_message'],
+                                                      "sender_id": "FSTSMS",
+                                                      "language": "english",
+                                                      "route": "p",
+                                                      "numbers": "8178736462"
+                                                    }),
+                                                  );
+                                                  print(response.statusCode);
+                                                } catch (e) {
+                                                  print(e);
+                                                }
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                       Container(
                         color: Colors.white,
