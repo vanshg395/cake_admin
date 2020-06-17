@@ -43,8 +43,9 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
     });
     if (!isAuth) {
       locator<NavigationService>().navigateTo(LoginRoute);
+    } else {
+      getData();
     }
-    getData();
   }
 
   Future<void> getData() async {
@@ -64,6 +65,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
         final resBody = json.decode(response.body);
         setState(() {
           _orders = resBody['payload'];
+          print(_orders[0]);
         });
       }
     } catch (e) {}
@@ -73,7 +75,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
   }
 
   Future<void> _confirmOrder(String orderId, String balance, String orderType,
-      String address, String totalAmount) async {
+      String address, String totalAmount, String phone) async {
     await showDialog(
       context: context,
       // barrierDismissible: false,
@@ -224,33 +226,29 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                   'address': address,
                                 }),
                         );
+                        print(response.statusCode);
+                        print(response.body);
                         if (response.statusCode == 201) {
                           Navigator.of(context).pop();
-                          await showDialog(
-                            context: context,
-                            child: AlertDialog(
-                              title: Text(
-                                'Success',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              content: Text(
-                                'You order is now confirmed.',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              actions: [
-                                FlatButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                )
-                              ],
-                            ),
-                          );
+                          try {
+                            final url = baseUrl + 'api/core/message/';
+                            final response = await http.post(
+                              url,
+                              headers: {
+                                HttpHeaders.authorizationHeader:
+                                    Provider.of<Auth>(context, listen: false)
+                                        .token,
+                              },
+                              body: json.encode({
+                                "message":
+                                    'You order is now processed. Your balance amount to be paid is ₹${_data['balance']}. Thankyou for shopping with us!',
+                                "phones": [phone],
+                              }),
+                            );
+                            print(response.statusCode);
+                          } catch (e) {
+                            print(e);
+                          }
                           getData();
                         } else {
                           await showDialog(
@@ -554,7 +552,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                         ),
                                         DataCell(
                                           Text(
-                                            order['eggless'] ? 'YES' : 'NO',
+                                            order['eggiless'] ? 'YES' : 'NO',
                                           ),
                                         ),
                                         DataCell(
@@ -598,17 +596,21 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                           RaisedButton(
                                             child: Text('Confirm Order'),
                                             onPressed: () {
+                                              print(order);
                                               _confirmOrder(
-                                                  order['id'].toString(),
-                                                  order['order_details'][0]
-                                                          ['balance']
-                                                      .toString(),
-                                                  order['order_details'][0]
-                                                      ['order_type'],
-                                                  order['order_details'][0]
-                                                      ['address'],
-                                                  order['order_details'][0]
-                                                      ['total_amount']);
+                                                order['id'].toString(),
+                                                order['order_details'][0]
+                                                        ['balance']
+                                                    .toString(),
+                                                order['order_details'][0]
+                                                    ['order_type'],
+                                                order['order_details'][0]
+                                                    ['address'],
+                                                order['order_details'][0]
+                                                    ['total_amount'],
+                                                order['phone_number']
+                                                    .toString(),
+                                              );
                                             },
                                           ),
                                         ),

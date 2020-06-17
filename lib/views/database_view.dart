@@ -26,7 +26,7 @@ class _DatabaseViewState extends State<DatabaseView> {
   List<dynamic> _users = [];
   GlobalKey<FormState> _formKey = GlobalKey();
   Map<String, dynamic> _data = {
-    'recipients': '',
+    'recipients': [],
   };
 
   @override
@@ -46,8 +46,9 @@ class _DatabaseViewState extends State<DatabaseView> {
     });
     if (!isAuth) {
       locator<NavigationService>().navigateTo(LoginRoute);
+    } else {
+      getData();
     }
-    getData();
   }
 
   Future<void> getData() async {
@@ -171,14 +172,9 @@ class _DatabaseViewState extends State<DatabaseView> {
                             child: Text('Send General Messages'),
                             onPressed: () async {
                               for (var i = 0; i < _users.length; i++) {
-                                if (i != _users.length - 1) {
-                                  _data['recipients'] +=
-                                      _users[i]['phone'] + ',';
-                                } else {
-                                  _data['recipients'] += _users[i]['phone'];
-                                }
+                                _data['recipients'].add(_users[i]['phone']);
                               }
-                              print(_data);
+                              print(_data['recipients']);
                               await showDialog(
                                 context: context,
                                 // barrierDismissible: false,
@@ -323,29 +319,35 @@ class _DatabaseViewState extends State<DatabaseView> {
                                                 //   ),
                                                 // );
                                                 try {
-                                                  final url =
-                                                      'https://www.fast2sms.com/dev/bulk';
+                                                  final url = baseUrl +
+                                                      'api/core/message/';
                                                   final response =
                                                       await http.post(
                                                     url,
                                                     headers: {
                                                       HttpHeaders
                                                               .authorizationHeader:
-                                                          'zasPcL6w0f8F4dXhgyrEmjku9Mp3IbiVvQl2tRANGWKoe7xOZJ0uBy1dTe6cDIr9EfMY2KRxlZOS7zQX'
+                                                          Provider.of<Auth>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .token,
+                                                      HttpHeaders
+                                                              .contentTypeHeader:
+                                                          'application/json'
                                                     },
                                                     body: json.encode({
                                                       "message": _data[
                                                           'general_message'],
-                                                      "sender_id": "FSTSMS",
-                                                      "language": "english",
-                                                      "route": "p",
-                                                      "numbers": "8178736462"
+                                                      "phones":
+                                                          _data['recipients'],
                                                     }),
                                                   );
                                                   print(response.statusCode);
+                                                  print(response.body);
                                                 } catch (e) {
                                                   print(e);
                                                 }
+                                                Navigator.of(context).pop();
                                               },
                                             )
                                           ],

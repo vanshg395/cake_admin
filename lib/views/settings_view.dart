@@ -44,8 +44,9 @@ class _SettingsViewState extends State<SettingsView> {
     });
     if (!isAuth) {
       locator<NavigationService>().navigateTo(LoginRoute);
+    } else {
+      getData();
     }
-    getData();
   }
 
   Future<void> getData() async {

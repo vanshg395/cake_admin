@@ -45,8 +45,9 @@ class _OrderViewState extends State<OrderView> {
     });
     if (!isAuth) {
       locator<NavigationService>().navigateTo(LoginRoute);
+    } else {
+      getData();
     }
-    getData();
   }
 
   Future<void> getData() async {
@@ -66,6 +67,7 @@ class _OrderViewState extends State<OrderView> {
         final resBody = json.decode(response.body);
         setState(() {
           _orders = resBody['payload'];
+          print(_orders[0]);
         });
       }
     } catch (e) {}
@@ -74,7 +76,8 @@ class _OrderViewState extends State<OrderView> {
     });
   }
 
-  Future<void> _processOrder(String orderId, String totalAmount) async {
+  Future<void> _processOrder(
+      String orderId, String totalAmount, String phone) async {
     _orderType = null;
     await showDialog(
       context: context,
@@ -385,31 +388,25 @@ class _OrderViewState extends State<OrderView> {
                         );
                         if (response.statusCode == 201) {
                           Navigator.of(context).pop();
-                          await showDialog(
-                            context: context,
-                            child: AlertDialog(
-                              title: Text(
-                                'Success',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              content: Text(
-                                'You order is now processing.',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              actions: [
-                                FlatButton(
-                                  child: Text('Ok'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                )
-                              ],
-                            ),
-                          );
+                          try {
+                            final url = baseUrl + 'api/core/message/';
+                            final response = await http.post(
+                              url,
+                              headers: {
+                                HttpHeaders.authorizationHeader:
+                                    Provider.of<Auth>(context, listen: false)
+                                        .token,
+                              },
+                              body: json.encode({
+                                "message":
+                                    'You order is now processing. Your balance amount to be paid is ₹${_data['balance']}.',
+                                "phones": [phone],
+                              }),
+                            );
+                            print(response.statusCode);
+                          } catch (e) {
+                            print(e);
+                          }
                           getData();
                         } else {
                           await showDialog(
@@ -718,8 +715,10 @@ class _OrderViewState extends State<OrderView> {
                                         RaisedButton(
                                           child: Text('Process Order'),
                                           onPressed: () => _processOrder(
-                                              order['id'].toString(),
-                                              order['total_amount'].toString()),
+                                            order['id'].toString(),
+                                            order['total_amount'].toString(),
+                                            order['phone_number'].toString(),
+                                          ),
                                         ),
                                       ),
                                     ],

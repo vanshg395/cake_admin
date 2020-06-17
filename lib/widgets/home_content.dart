@@ -8,6 +8,12 @@ import './alt_button.dart';
 import '../extensions/hover_extensions.dart';
 
 class HomeContent extends StatelessWidget {
+  final int pending;
+  final int processing;
+  final int completed;
+
+  HomeContent(this.pending, this.processing, this.completed);
+
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout(
@@ -131,7 +137,7 @@ class HomeContent extends StatelessWidget {
                         .copyWith(color: Colors.black),
                   ),
                   Text(
-                    'XX',
+                    pending.toString(),
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Color(0xFFFF0000),
                         ),
@@ -148,7 +154,7 @@ class HomeContent extends StatelessWidget {
                         .copyWith(color: Colors.black),
                   ),
                   Text(
-                    'XX',
+                    processing.toString(),
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Color(0xFF00a8ff),
                         ),
@@ -165,7 +171,7 @@ class HomeContent extends StatelessWidget {
                         .copyWith(color: Colors.black),
                   ),
                   Text(
-                    'XX',
+                    completed.toString(),
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Color(0xFF00ff60),
                         ),
@@ -303,7 +309,7 @@ class HomeContent extends StatelessWidget {
                         .copyWith(color: Colors.black),
                   ),
                   Text(
-                    'XX',
+                    pending.toString(),
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Color(0xFFFF0000),
                         ),
@@ -322,7 +328,7 @@ class HomeContent extends StatelessWidget {
                         .copyWith(color: Colors.black),
                   ),
                   Text(
-                    'XX',
+                    processing.toString(),
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Color(0xFF00a8ff),
                         ),
@@ -341,7 +347,7 @@ class HomeContent extends StatelessWidget {
                         .copyWith(color: Colors.black),
                   ),
                   Text(
-                    'XX',
+                    completed.toString(),
                     style: Theme.of(context).textTheme.subtitle1.copyWith(
                           color: Color(0xFF00ff60),
                         ),

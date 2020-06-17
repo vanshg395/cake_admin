@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:http/http.dart' as http;
 
+import '../utils/constants.dart';
 import '../widgets/home_content.dart';
 import '../extensions/hover_extensions.dart';
 import '../providers/auth.dart';
@@ -19,6 +24,9 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool _isLoading = false;
+  int _pending = 0;
+  int _processing = 0;
+  int _completed = 0;
 
   @override
   void initState() {
@@ -37,7 +45,38 @@ class _HomeViewState extends State<HomeView> {
     });
     if (!isAuth) {
       locator<NavigationService>().navigateTo(LoginRoute);
+    } else {
+      getData();
     }
+  }
+
+  Future<void> getData() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      final url = baseUrl + 'api/core/dash/';
+      final response = await http.get(
+        url,
+        headers: {
+          HttpHeaders.authorizationHeader:
+              Provider.of<Auth>(context, listen: false).token,
+        },
+      );
+      print(response.statusCode);
+      print(response.body);
+      if (response.statusCode == 200) {
+        final resBody = json.decode(response.body);
+        setState(() {
+          _pending = resBody['pending'];
+          _processing = resBody['processing'];
+          _completed = resBody['completed'];
+        });
+      }
+    } catch (e) {}
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -128,7 +167,7 @@ class _HomeViewState extends State<HomeView> {
                         ],
                       ),
                     ),
-                    HomeContent(),
+                    HomeContent(_pending, _processing, _completed),
                   ],
                 ),
               ),
