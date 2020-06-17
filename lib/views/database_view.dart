@@ -174,7 +174,6 @@ class _DatabaseViewState extends State<DatabaseView> {
                               for (var i = 0; i < _users.length; i++) {
                                 _data['recipients'].add(_users[i]['phone']);
                               }
-                              print(_data['recipients']);
                               await showDialog(
                                 context: context,
                                 // barrierDismissible: false,
@@ -342,11 +341,7 @@ class _DatabaseViewState extends State<DatabaseView> {
                                                           _data['recipients'],
                                                     }),
                                                   );
-                                                  print(response.statusCode);
-                                                  print(response.body);
-                                                } catch (e) {
-                                                  print(e);
-                                                }
+                                                } catch (e) {}
                                                 Navigator.of(context).pop();
                                               },
                                             )

@@ -63,8 +63,6 @@ class _HomeViewState extends State<HomeView> {
               Provider.of<Auth>(context, listen: false).token,
         },
       );
-      print(response.statusCode);
-      print(response.body);
       if (response.statusCode == 200) {
         final resBody = json.decode(response.body);
         setState(() {

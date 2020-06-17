@@ -65,7 +65,6 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
         final resBody = json.decode(response.body);
         setState(() {
           _orders = resBody['payload'];
-          print(_orders[0]);
         });
       }
     } catch (e) {}
@@ -226,8 +225,6 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                   'address': address,
                                 }),
                         );
-                        print(response.statusCode);
-                        print(response.body);
                         if (response.statusCode == 201) {
                           Navigator.of(context).pop();
                           try {
@@ -245,10 +242,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                 "phones": [phone],
                               }),
                             );
-                            print(response.statusCode);
-                          } catch (e) {
-                            print(e);
-                          }
+                          } catch (e) {}
                           getData();
                         } else {
                           await showDialog(
@@ -532,7 +526,13 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                         ),
                                         DataCell(
                                           Text(
-                                            order['cake_name'],
+                                            order['cake_details']
+                                                    ['does_this_have_flavours']
+                                                ? order['cake_name'] +
+                                                    ' : ' +
+                                                    order['flavor']
+                                                        ['falvour_name']
+                                                : order['cake_name'],
                                           ),
                                         ),
                                         DataCell(
@@ -552,7 +552,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                         ),
                                         DataCell(
                                           Text(
-                                            order['eggiless'] ? 'YES' : 'NO',
+                                            order['eggless'] ? 'YES' : 'NO',
                                           ),
                                         ),
                                         DataCell(
@@ -596,7 +596,6 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                                           RaisedButton(
                                             child: Text('Confirm Order'),
                                             onPressed: () {
-                                              print(order);
                                               _confirmOrder(
                                                 order['id'].toString(),
                                                 order['order_details'][0]
