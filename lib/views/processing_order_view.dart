@@ -457,7 +457,7 @@ class _ProcessingOrderViewState extends State<ProcessingOrderView> {
                               ),
                               DataColumn(
                                 label: Text(
-                                  'Price (₹)',
+                                  'Total Amount (₹)',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ),

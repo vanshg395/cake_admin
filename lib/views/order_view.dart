@@ -170,6 +170,9 @@ class _OrderViewState extends State<OrderView> {
                         if (double.tryParse(value) == null) {
                           return 'Enter valid value.';
                         }
+                        if (double.parse(value) > double.parse(totalAmount)) {
+                          return 'Amount can\'t exceed Total Amount';
+                        }
                       },
                       onSaved: (value) {
                         _data['balance'] =
@@ -617,7 +620,7 @@ class _OrderViewState extends State<OrderView> {
                               ),
                               DataColumn(
                                 label: Text(
-                                  'Price (₹)',
+                                  'Total Amount (₹)',
                                   style: TextStyle(fontWeight: FontWeight.w700),
                                 ),
                               ),
